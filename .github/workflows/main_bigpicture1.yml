@@ -21,6 +21,21 @@ jobs:
         with:
           dotnet-version: '5.0.x'
           include-prerelease: true
+          
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.16.3    
+
+      - name: Install dependencies in client app
+        working-directory: TailwindTraders.Website/Source/Tailwind.Traders.Web/ClientApp
+        run: npm install
+
+      - name: Build and publish with dotnet
+        working-directory: TailwindTraders.Website/Source/Tailwind.Traders.Web
+        run: |
+         dotnet build --configuration Release
+         dotnet publish -c Release -o publish
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
